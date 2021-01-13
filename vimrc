@@ -1,31 +1,167 @@
-colorscheme custom
+" colorscheme custom
+
+"For safe-mapping of alt-keys
+let g:altCommands = 0
+function! DefineAltMap(from, to)
+    let index = g:altCommands + 13
+    let iString = '<F'.string(index).'>'
+    execute 'set' iString . '=' . a:from
+    execute 'nmap' iString a:to
+    execute 'map!' iString "<NOP>"
+    let g:altCommands += 1
+endfunction
 
 
+function! ToggleAutoDispatch()
+    if (!exists("b:auto_dispatch") || b:auto_dispatch == 0)
+        let b:auto_dispatch=1
+        :augroup AutoDispatch
+        :    autocmd BufWritePost <buffer> Dispatch!
+        :augroup END
+    else
+        let b:auto_dispatch=0
+        autocmd! AutoDispatch * <buffer>
+    endif
+endfunction
+
+function! ToggleGStatus()
+    if buflisted(bufname('.git/index'))
+        bd .git/index
+    else
+        Gstatus
+        exe "norm! 3\<C-W>\<C-+>"
+    endif 
+endfunction
+
+set display+=lastline
+set scrolloff=1
+set incsearch
+set smarttab
+set backspace=indent,eol,start
+set fileencodings=utf-8
+set encoding=utf-8
 set nocompatible
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set showcmd
 set autoindent
-
-compiler gcc
+set equalalways
 set spl=en spell
 set nospell
+set wildmenu
+set wildmode=list:longest:full
 set relativenumber
 set number
-
+set splitright
+set splitbelow
+set laststatus=2
+set timeout
+set timeoutlen=1000
+set ttimeoutlen=100
+set autoread
+set noshowmode
 syntax enable
 
-execute pathogen#infect('plugins/{}')
+""""""""PLUGINS"""""""
+call pathogen#infect()
+syntax on
+filetype plugin indent on
 
-noremap <C-N> :NERDTreeToggle<Enter>
-noremap <C-Y> :tabedit 
-noremap <C-L> :TlistToggle<Enter>
+"Powerline fonts for airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='badwolf'
+
+"Syntastic Reccomended Settings for Beginners
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+""""""""""""""""""""""
+
+call DefineAltMap('a', '<C-U>')
+call DefineAltMap(';', '<C-D>')
+call DefineAltMap('q', ':call ToggleLocationList()<CR>')
+call DefineAltMap('P', ':call ToggleQuickfixList()<CR>')
+call DefineAltMap('e', ':NERDTreeToggle<Enter>')
+call DefineAltMap('y', ':tabedit ')
+call DefineAltMap('s', ':SyntasticCheck<Enter>')
+call DefineAltMap('S', ':SyntasticReset<Enter>')
+call DefineAltMap('N', '<C-w><')
+call DefineAltMap('M', '<C-w>>')
+call DefineAltMap('U', '<C-w>+')
+call DefineAltMap('I', '<C-w>-')
+call DefineAltMap('v', ':vsp '.resolve($MYVIMRC).'<Enter>')
+call DefineAltMap('J', '<C-w>J')
+call DefineAltMap('K', '<C-w>K')
+call DefineAltMap('H', '<C-w>H')
+call DefineAltMap('L', '<C-w>L')
+call DefineAltMap('T', '<C-w>T')
+call DefineAltMap('r', ':checktime <Enter>')
+call DefineAltMap('D', ':call ToggleAutoDispatch()<Enter>')
+call DefineAltMap('u', ':GundoToggle<Enter>')
+call DefineAltMap('t', ':TlistToggle<Enter>')
+call DefineAltMap('g', ':call ToggleGStatus()<Enter>')
+call DefineAltMap('o', '<C-A>')
+call DefineAltMap('w', '<C-X>')
+
+map <F8> : !gcc % && -o %< && ./&< <CR>
+noremap U <C-r>
+noremap ]w <C-W>w
+noremap [w <C-W>W
+noremap [= <C-w>=
+noremap ]= <C-w>|
+noremap [s <C-W>x
+noremap [r <C-W>R
+noremap ]r <C-W>r
+noremap <Space> za
+noremap K i<CR><Esc>
+nnoremap <C-n> :NERDTree<CR>
+
+
+if has("autocmd")
+    :augroup CustomCommands
+    :   autocmd!
+    :   autocmd BufWritePost {.vimrc,vimrc} nested source $MYVIMRC
+    :   autocmd FileType python set commentstring=#\ %s
+    :   autocmd FileType html set commentstring=<!--\ %s\ -->
+    :   autocmd FileType sass let b:dispatch="sass -t expanded --sourcemap=none \"%\" \"%:r.css\""
+    :   autocmd FileType haml let b:dispatch="haml \"%\" \"%:r.html\""
+    :   autocmd FileType coffee let b:dispatch="coffee -c \"%\""
+    :   autocmd FileType coffee setlocal tabstop=2
+    :   autocmd FileType coffee setlocal shiftwidth=2
+    :augroup END
+endif
+
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+
+let g:toggle_list_copen_command = "Copen"
 
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_javascript_checkers = ["gjslint"]
+let g:syntastic_sass_checkers = ["sass"]
+let g:syntastic_coffee_checkers = ["coffeelint"]
+hi link coffeeSpaceError None
+
+let g:syntastic_always_populate_loc_list = 1
 
 let g:SuperTabDefaultCompletionType = "context"
 
+let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>G"
+let g:jedi#documentation_command = "<leader>d"
+let g:jedi#usages_command = "<leader>D"
+let g:jedi#rename_command = "<leader>r"
 
-au FileType python map <F5> :!clear && python %<CR> 
+let g:gundo_help = 0
 
+let g:Tlist_WinWidth = 40
+let Tlist_Compact_Format = 1

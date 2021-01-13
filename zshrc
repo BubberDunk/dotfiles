@@ -1,9 +1,23 @@
-autoload -U compinit colors
+# Source manjaro-zsh-configuration
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
+# Use manjaro zsh prompt
+if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+  source /usr/share/zsh/manjaro-zsh-prompt
+fi
+
+autoload -Uz compinit colors
 compinit
 colors
+bindkey -v
 
+typeset -U path
+# path=(${path[*]} ~/dotfiles/scripts ~/.gem/ruby/2.2.0/bin)
+setopt PROMPT_SUBST
 setopt NOBG_NICE
 setopt NOHUP
+# source .git_prompt
 
 HISTSIZE=1000
 
@@ -11,28 +25,45 @@ function extract() {
     NAME=`echo ${1} | sed -e 's/\.[a-zA-Z0-9]*$//'`
     mkdir ${NAME}
     unzip -d ${NAME} ${1}
-}
-alias shutdown now="shutdown now 2>shutdownErrors"
-alias gclone="git clone"
+} 
+
+# ssh aliases
+alias ada="ssh grisam10@ada.evergreen.edu"
+#####
+
+alias devs="ls -lh /dev/sd*"
+alias aur="bash <(curl aur.sh) -si"
+alias pupdate="sudo pacman -Syu"
+alias ipy="ipython2"
+alias ranger="ranger -r ~/.ranger"
+
+alias logisim="java -jar ~/.logisim/logisim-generic-2.7.1.jar"
+
+alias gadd="git add"
 alias gcommit="git commit"
 alias gstat="git status"
 alias gdiff="git diff"
+
+alias nose="nosetests2"
 alias gdb="gdb -silent"
 alias gcc="gcc -Wall -std=gnu11"
 alias feh="feh --auto-zoom --fullscreen --draw-filename"
 alias df="df --human-readable"
 alias shred="shred --zero --remove --verbose"
 alias ls="ls -lhH --color"
-alias lsd="ls -lh --color | grep -e \"^d\"" alias ..="cd .."
-alias cls="clear"
+alias lsd="ls -lh --color | grep -e \"^d\""
+alias ..="cd .."
 alias less="less -r"
-alias cryptopen="cryptsetup luksOpen"
-alias cryptclose="cryptsetup luksClose"
+alias cryptopen="sudo cryptsetup luksOpen"
+alias cryptclose="sudo cryptsetup luksClose"
 alias camshot="mplayer tv:// -tv width=1280:height=720 -fs -vf screenshot"
-alias python="ipython2"
-alias pingg="ping google.com"
-alias lsblk="lsblk -f"
 
-PROMPT="%{$fg[blue]%}%n@%M %{$fg[red]%}%~%{$reset_color%} >> "
-export LS_COLORS='di=0;34;40:ex=0;35;40'
+export LS_COLORS='di=32:ex=0;35;40'
+
 export EDITOR="vim"
+export LC_ALL="en_US.UTF-8"
+export LANG=$LC_ALL
+
+PROMPT='%{$fg[green]%}(%{$fg[magenta]%}%h%{$fg[green]%}) %{$fg[blue]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[red]%}%~%{$fg[green]%}>> %{$reset_color%}% '
+
+ZSH_THEME=muse
