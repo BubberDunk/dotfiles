@@ -64,6 +64,6 @@ export EDITOR="vim"
 export LC_ALL="en_US.UTF-8"
 export LANG=$LC_ALL
 
-PROMPT='%{$fg[green]%}(%{$fg[magenta]%}%h%{$fg[green]%}) %{$fg[blue]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[red]%}%~%{$fg[green]%}>> %{$reset_color%}% '
+PROMPT='%{$fg[blue]%}%n%{$fg[yellow]%}@%{$fg[blue]%}%M %{$fg[red]%}%~%{$fg[yellow]%}>> %{$reset_color%}% '
 
 ZSH_THEME=muse

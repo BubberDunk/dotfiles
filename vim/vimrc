@@ -63,6 +63,12 @@ set autoread
 set noshowmode
 syntax enable
 
+"Line Highlighting check :help hl-CursorLine search cterm-colors 
+set cursorline
+hi CursorLine cterm=NONE ctermbg=Black
+hi CursorLineNr cterm=NONE ctermbg=Black
+
+
 """"""""PLUGINS"""""""
 call pathogen#infect()
 syntax on
@@ -82,6 +88,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+"NERDTree
+let g:NERDTreeWinSize=20
 """"""""""""""""""""""
 
 call DefineAltMap('a', '<C-U>')

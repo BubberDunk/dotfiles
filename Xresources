@@ -6,53 +6,38 @@ Xft.autohint:  false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
-XTerm*background:        #222D31
-XTerm*foreground:        #d8d8d8
-XTerm*pointerColor:      #1ABB9B
-XTerm*faceName:          Fixed
-XTerm*faceSize:          11
-XTerm*reverseVideo:      on
-XTerm*selectToClipboard: true
+! black
+urxvt.color0:       #223228
+urxvt.color8:       #687d68
 
-*background:                      #222D31
-*foreground:                      #d8d8d8
-*fading:                          8
-*fadeColor:                       black
-*cursorColor:                     #1ABB9B
-*pointerColorBackground:          #2B2C2B
-*pointerColorForeground:          #16A085
+! red
+urxvt.color1:       #e6193c
+urxvt.color9:       #e6193c
 
-!! black dark/light
-*color0:                          #222D31
-*color8:                          #585858
+! green
+urxvt.color2:       #29a329
+urxvt.color10:      #29a329
 
-!! red dark/light
-*color9:                          #ED4b40
-*color1:                          #f58a82
+! yellow
+urxvt.color3:       #c3c322
+urxvt.color11:      #c3c322
 
-!! green dark/light
-*color10:                        #309161
-*color2:                         #6ab48f
+! blue
+urxvt.color4:       #3d62f5
+urxvt.color12:      #3d62f5
 
-!! yellow dark/light
-*color11:                        #FFC14D
-*color3:                         #ECB089
+! magenta
+urxvt.color5:       #ad2bee
+urxvt.color13:      #ad2bee
 
-!! blue dark/light
-*color12:                        #6D9599
-*color4:                         #577496
+! cyan
+urxvt.color6:       #1999b3
+urxvt.color14:      #1999b3
 
-!! magenta dark/light
-*color13:                        #BB86FC
-*color5:                         #7c68e7
+! white
+urxvt.color7:       #8ca68c
+urxvt.color15:      #f0fff0
 
-!! cyan dark/light
-*color6:                          #1ABB9B
-*color14:                         #1ABB9B
-
-!! white dark/light
-*color7:                          #d8d8d8
-*color15:                         #f8f8f8
 
 Xcursor.theme: xcursor-breeze
 
@@ -66,18 +51,17 @@ URxvt.font:                       9x15,xft:TerminessTTFNerdFontMono
 !! terminus names see end of file!
 
 URxvt.depth:                      32
-URxvt.background:                 [100]#222D31
 URxvt*scrollBar:                  false
 URxvt*mouseWheelScrollPage:       false
-URxvt*cursorBlink:                true
-URxvt*background:                 black
-URxvt*foreground:                 grey
+URxvt.foreground:   #8ca68c
+URxvt.background:   #131513
+URxvt.cursorColor:  #8ca68c
 URxvt*saveLines:                  5000
 
 ! for 'fake' transparency (without Compton) uncomment the following three lines
 !URxvt*inheritPixmap:            true
 !URxvt*transparent:              true
-!URxvt*shading:                  155
+!URxvt*shading:                  50
 
 ! Normal copy-paste keybindings without perls
 URxvt.iso14755:                   false
